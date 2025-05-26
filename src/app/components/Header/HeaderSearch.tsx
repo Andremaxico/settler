@@ -18,7 +18,7 @@ export const HeaderSearch: React.FC<PropsType> = ({}) => {
 			className='
 				flex items-center
 				py-1 px-1.5
-				w-full max-w-3xs md:max-w-lg
+				w-full max-w-2xs md:max-w-lg
 				bg-gray
 				border-1 border-gray-300 rounded-sm
 				focus-within:border-black hover:shadow-md

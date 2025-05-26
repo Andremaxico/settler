@@ -10,9 +10,11 @@ export const Header: React.FC<PropsType> = ({}) => {
 		<div className='
 			py-6
 			sticky top-0 left-0
+			bg-white
 			shadow-md
+			z-10
 		'>
-			<div className="flex justify-between items-center container">
+			<div className="flex justify-between items-center space-x-2 container">
 				<HeaderLogo />
 				<HeaderSearch />
 				<HeaderProfile />
