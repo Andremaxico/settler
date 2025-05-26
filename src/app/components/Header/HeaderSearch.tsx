@@ -18,7 +18,7 @@ export const HeaderSearch: React.FC<PropsType> = ({}) => {
 			className='
 				flex items-center
 				py-1 px-1.5
-				max-w-3xs
+				w-full max-w-3xs md:max-w-lg
 				bg-gray
 				border-1 border-gray-300 rounded-sm
 				focus-within:border-black hover:shadow-md
@@ -29,7 +29,7 @@ export const HeaderSearch: React.FC<PropsType> = ({}) => {
 				placeholder='Шукати' 
 				value={searchValue}
 				onChange={handleChange}
-				className='outline-0 text-sm md:text-md'
+				className='flex-auto outline-0 text-sm md:text-md'
 			/>
 			<button className='cursor-pointer'>
 				<MagnifyingGlassIcon

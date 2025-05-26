@@ -4,3 +4,14 @@
   max-width: 1180px;
   margin: 0 auto;
 }
+
+
+@media (max-width: 576px) {
+  .container {
+    padding: 0 16px 0 16px;
+  }
+}
+
+button {
+  cursor: pointer;
+}
