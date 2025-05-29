@@ -32,7 +32,7 @@ export const Stories: React.FC<PropsType> = ({}) => {
 	if(!storyUsers || storyUsers.length == 0) return <p>No stories</p>
 
 	return (
-		<div>
+		<div className='flex space-x-2 p-4 border border-gray-400 rounded-md overflow-x-scroll scrollbar-none container max-w-[95vw]'>
 			{storyUsers.map(userData => <Story userData={userData} key={userData.id} />)}
 		</div>
 	)
