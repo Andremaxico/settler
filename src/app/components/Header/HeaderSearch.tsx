@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
+import { SearchCircleIcon } from '@heroicons/react/solid';
 
 type PropsType = {}
 
@@ -32,7 +32,7 @@ export const HeaderSearch: React.FC<PropsType> = ({}) => {
 				className='flex-auto outline-0 text-sm md:text-md'
 			/>
 			<button className='cursor-pointer'>
-				<MagnifyingGlassIcon
+				<SearchCircleIcon
 					className='size-5 text-gray-500'
 				/>
 			</button>

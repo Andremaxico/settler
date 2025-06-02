@@ -6,7 +6,7 @@ type PropsType = {};
 
 export const Feed: React.FC<PropsType> = () => {
 	return (
-		<div>
+		<div className='max-w-full'>
 			<Stories />
 			<Posts />
 		</div>

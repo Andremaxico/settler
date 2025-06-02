@@ -1,5 +1,5 @@
-import { PlusCircleIcon } from '@heroicons/react/24/outline'
-import { HomeIcon } from '@heroicons/react/24/solid'
+import { PlusCircleIcon } from '@heroicons/react/outline'
+import { HomeIcon } from '@heroicons/react/solid'
 import Image from 'next/image'
 import React from 'react'
 
