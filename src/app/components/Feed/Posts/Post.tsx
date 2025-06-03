@@ -1,7 +1,7 @@
 import React from 'react'
 import { PostType } from './Posts';
 import Image from 'next/image';
-import { DotsHorizontalIcon } from '@heroicons/react/outline'
+import { DotsHorizontalIcon, HeartIcon, ChatIcon, BookmarkIcon } from '@heroicons/react/outline'
 
 type PropsType = {
 	data: PostType,
@@ -36,8 +36,21 @@ export const Post: React.FC<PropsType> = ({data}) => {
 					className='object-cover w-full'
 				/>
 			</div>
-			<div className="">
-				<div className=""></div>
+			<div className="p-3">
+				{/* buttons */}
+				<div className="flex justify-between items-center">
+					<div className="flex items-center space-x-4">
+						<button className='postBtn'>
+							<HeartIcon className='size-6' />
+						</button>
+						<button className='postBtn'>
+							<ChatIcon className='size-6' />
+						</button>
+					</div>
+					<button className='postBtn'>
+						<BookmarkIcon className='size-6' />
+					</button>
+				</div>
 			</div>
 		</div>
 	)

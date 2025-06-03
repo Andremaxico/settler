@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@layer components {
+  .postBtn {
+    @apply h-5 hover:scale-110 duration-75
+  }
+}
+
 @plugin 'tailwind-scrollbar' {
   nocompatible: true;
   preferredStrategy: 'pseudoelements';

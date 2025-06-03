@@ -34,7 +34,7 @@ export const Posts: React.FC<PropsType> = ({}) => {
 	}
 
 	return (
-		<div>
+		<div className='flex flex-col space-y-4'>
 			{dummyData.map(data => <Post data={data} key={data.id} />)}
 		</div>
 	)
