@@ -1,7 +1,7 @@
 import React from 'react'
 import { PostType } from './Posts';
 import Image from 'next/image';
-import { DotsHorizontalIcon, HeartIcon, ChatIcon, BookmarkIcon } from '@heroicons/react/outline'
+import { DotsHorizontalIcon, HeartIcon, ChatIcon, BookmarkIcon, EmojiHappyIcon } from '@heroicons/react/outline'
 
 type PropsType = {
 	data: PostType,
@@ -38,7 +38,7 @@ export const Post: React.FC<PropsType> = ({data}) => {
 			</div>
 			<div className="p-3">
 				{/* buttons */}
-				<div className="flex justify-between items-center">
+				<div className="flex justify-between items-center mb-3">
 					<div className="flex items-center space-x-4">
 						<button className='postBtn'>
 							<HeartIcon className='size-6' />
@@ -51,6 +51,25 @@ export const Post: React.FC<PropsType> = ({data}) => {
 						<BookmarkIcon className='size-6' />
 					</button>
 				</div>
+
+				{/* caption */}
+				<div className="flex items-center text-sm">
+					<p className='font-bold mr-1'>{username}</p>
+					<p className='truncate'>{caption}</p>
+				</div>
+
+
+				{/* post input */}
+				<form className="flex items-center space-x-1">
+					<EmojiHappyIcon className='size-6' />
+					<input 
+						placeholder='Введіть ваш коментар...'
+						className='p-2 text-sm flex-auto outline-0 cursor-pointer focus:shadow-sm furation-75'
+					/>
+					<button className='font-semibold text-blue-400 text-sm'>
+						Опублікувати
+					</button>
+				</form>
 			</div>
 		</div>
 	)
