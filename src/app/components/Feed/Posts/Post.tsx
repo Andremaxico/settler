@@ -23,9 +23,9 @@ export const Post: React.FC<PropsType> = ({data}) => {
 					/>
 					<p className="">{username}</p>
 				</div>
-				<div className="">
+				<button className="">
 					<DotsHorizontalIcon className='size-6' />
-				</div>
+				</button>
 			</div>
 			<div className="">
 				<Image 
