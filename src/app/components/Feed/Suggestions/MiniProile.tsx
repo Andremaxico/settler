@@ -23,7 +23,7 @@ export const MiniProile: React.FC<PropsType> = ({}) => {
 				<p className='mb-1 text-md font-semibold'>Andremaxico</p>
 				<p className='text-gray-400'>Andrii Solomo</p>
 			</div>
-			<button className='ml-auto font-semibold text-blue-400'>Sign out</button>
+			<button className='ml-auto font-semibold text-blue-400'>Вийти</button>
 		</div>
 	)
 }
