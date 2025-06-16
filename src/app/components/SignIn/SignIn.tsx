@@ -7,8 +7,10 @@ import React from 'react'
 type PropsType = {};
 
 export const SignIn: React.FC<PropsType> = ({}) => {
-	const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-		signIn('google', { redirect: true, callbackUrl: '/' })
+	const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+		const res = await signIn('google', { redirect: true, callbackUrl: process.env.NEXT_PUBLIC_NEXTAUTH_URL });
+
+		console.log('signin response', res);
 	}
  
 	return (
