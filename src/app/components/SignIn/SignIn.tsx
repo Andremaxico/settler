@@ -8,14 +8,16 @@ type PropsType = {};
 
 export const SignIn: React.FC<PropsType> = ({}) => {
 	const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
-		const res = await signIn('google', { redirect: true, callbackUrl: process.env.NEXT_PUBLIC_NEXTAUTH_URL });
+
+		console.log('callbacl url', process.env.NEXT_PUBLIC_NEXTAUTH_URL)
+		const res = await signIn('google', { redirect: true, callbackUrl: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL || 'http://localhost:3000'}/api/auth/callback/google` });
 
 		console.log('signin response', res);
 	}
  
 	return (
 		<div className='flex items-center space-x-2 max-w-3xl mx-auto'>
-			<div className="flex-2/3 grow-0">
+			<div className="hidden sm:block flex-2/3 grow-0">
 				<Image 
 					src='https://socialboss.org/wp-content/uploads/2023/09/insta-views.png'
 					alt='settler photo'
