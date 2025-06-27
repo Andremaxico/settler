@@ -14,12 +14,14 @@ export type SessionType = {
 		name: string,
 		email: string,
 		image: string,
+		username: string,
+		uid: string,
 	}
 }
 
 export const HeaderProfile = () => {
 	const {data} = useSession();
-	const session = data as SessionType;
+	const session = data as unknown as SessionType;
 
 	console.log(session);
 
@@ -43,8 +45,8 @@ export const HeaderProfile = () => {
 					/>
 				</button>
 			:
-				<Link className='hover:text-blue-600' href={'/auth/signin'}>
-					<span className='hidden md:inline-block'>Sign In</span>
+				<Link className='flex items-center hover:text-blue-600' href={'/auth/signin'}>
+					<span className='mr-1 hidden md:inline-block'>Sign In</span>
 					<LoginIcon className='size-4' />
 				</Link>
 			}
