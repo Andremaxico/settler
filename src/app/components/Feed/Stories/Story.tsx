@@ -12,8 +12,8 @@ export const Story: React.FC<PropsType> = ({ userData, isMy }) => {
 	const { avatarUrl, username } = userData;
 
 	return (
-		<div className='flex flex-col items-center cursor-pointer hover:scale-110 duration-100'>
-			<div className="relative w-12 rounded-full p-0.5 border-2 border-red-500 mb-1 overflow-hidden box-content">
+		<div className='flex flex-col items-center cursor-pointer '>
+			<div className="relative w-12 rounded-full p-0.5 border-2 hover:scale-110 duration-100 border-red-500 mb-1 overflow-hidden box-content">
 				<Image 
 					src={avatarUrl}
 					alt='avatar'
