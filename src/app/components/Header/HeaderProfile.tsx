@@ -1,6 +1,7 @@
 'use client'
 
 import { authOptions } from '@/app/lib/nextAuth'
+import { useAddPostModalStore } from '@/app/zustand/addPostModalStore'
 import { PlusCircleIcon } from '@heroicons/react/outline'
 import { HomeIcon, LoginIcon, LogoutIcon } from '@heroicons/react/solid'
 import { getServerSession } from 'next-auth'
@@ -8,6 +9,7 @@ import { signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
+import { useRecoilState } from 'recoil'
 
 export type SessionType = {
 	user: {
@@ -20,19 +22,25 @@ export type SessionType = {
 }
 
 export const HeaderProfile = () => {
+	const { show } = useAddPostModalStore()
+
 	const {data} = useSession();
 	const session = data as unknown as SessionType;
 
 	console.log(session);
 
 	const handleSignOut = () => signOut();
+	const handlePlusClick = () => {
+		console.log('show modal');
+		show()
+	};
 
 	return (
 		<div className='flex items-center'>
 			<button className='mr-2 hidden md:inline-flex hover:scale-125 duration-75'>
 				<HomeIcon className='size-5 md:size-6' />
 			</button>
-			<button className='mr-2 hover:scale-125 duration-75'>
+			<button className='mr-2 hover:scale-125 duration-75' onClick={handlePlusClick}>
 				<PlusCircleIcon className='size-5 md:size-6' />
 			</button>
 			{session ?

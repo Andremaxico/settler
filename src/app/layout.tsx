@@ -3,6 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "./components/Header/Header";
 import { NextAuthProvider } from "@/providers/NextAuthProvider";
+import { RecoilRoot } from "recoil";
+import { RecoilProvider } from "@/providers/RecoilProvider";
+import { AddPostModal } from "./components/AddPostModal/AddPostModal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,11 +32,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NextAuthProvider>
-          {/* Header */}
-          <Header />
-          {children} 
-        </NextAuthProvider>
+        <RecoilProvider>
+          <NextAuthProvider>
+            {/* Header */}
+            <Header />
+            {children}
+            <AddPostModal /> 
+          </NextAuthProvider>
+        </RecoilProvider>
       </body>
     </html>
   );

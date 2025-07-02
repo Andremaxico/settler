@@ -28,8 +28,8 @@ export const MiniProile: React.FC<PropsType> = ({}) => {
 				/>
 			</Link>
 			<div className="flex flex-col flex-1">
-				<p className='mb-1 text-md font-semibold'>{session.user.username}</p>
-				<p className='text-gray-400'>{session.user.name}</p>
+				<p className='mb-1 text-md font-semibold'>{session?.user.username}</p>
+				<p className='text-gray-400'>{session?.user.name}</p>
 			</div>
 			<button 
 				className='ml-auto font-semibold text-blue-400'

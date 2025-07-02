@@ -7,7 +7,7 @@ type PropsType = {};
 
 export const Header: React.FC<PropsType> = ({}) => {
 	return (
-		<div className='
+		<header className='
 			py-6
 			sticky top-0 left-0
 			bg-white
@@ -19,6 +19,6 @@ export const Header: React.FC<PropsType> = ({}) => {
 				<HeaderSearch />
 				<HeaderProfile />
 			</div>
-		</div>
+		</header>
 	)
 }
