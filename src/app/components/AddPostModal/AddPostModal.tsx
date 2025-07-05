@@ -3,6 +3,7 @@
 import { useAddPostModalStore } from '@/app/zustand/addPostModalStore';
 import React from 'react'
 import { useRecoilState } from 'recoil';
+import Modal from 'react-modal';
 
 type PropsType = {};
 
@@ -12,8 +13,11 @@ export const AddPostModal: React.FC<PropsType> = () => {
     console.log('is visible', isVisible);
 
     return (
-        <div className={`${!isVisible ? 'hidden' : ''} flex sticky top-1/2 left-1/2 bg-amber-700 w-xl h-xl z-20`}>
+        <Modal
+            className={`${!isVisible ? 'hidden' : ''} flex sticky top-1/2 left-1/2 translate-x-[-50%] container md:max-w-xl h-xl bg-white rounded-md z-20`}
+            isOpen={isVisible}
+        >
             add post modal
-        </div>
+        </Modal> 
     )
 }
