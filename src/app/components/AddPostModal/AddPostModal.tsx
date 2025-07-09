@@ -4,6 +4,8 @@ import { useAddPostModalStore } from '@/app/zustand/addPostModalStore';
 import React from 'react'
 import { useRecoilState } from 'recoil';
 import Modal from 'react-modal';
+import { CloseBtn } from './CloseBtn';
+import { AddPostForm } from './AddPostForm';
 
 type PropsType = {};
 
@@ -14,10 +16,13 @@ export const AddPostModal: React.FC<PropsType> = () => {
 
     return (
         <Modal
-            className={`${!isVisible ? 'hidden' : ''} flex sticky top-1/2 left-1/2 translate-x-[-50%] container md:max-w-xl h-xl bg-white rounded-md z-20`}
+            className={`${!isVisible ? 'hidden' : ''} flex flex-col sticky top-1/2 mx-auto p-2 max-w-12 sm:max-w-3xs h-xl bg-white rounded-md z-20 shadow-md`}
             isOpen={isVisible}
         >
-            add post modal
+            <div className="flex justify-self-end">
+                <CloseBtn />
+            </div>
+            <AddPostForm />
         </Modal> 
     )
 }
