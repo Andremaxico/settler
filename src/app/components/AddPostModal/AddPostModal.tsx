@@ -16,10 +16,15 @@ export const AddPostModal: React.FC<PropsType> = () => {
 
     return (
         <Modal
-            className={`${!isVisible ? 'hidden' : ''} flex flex-col sticky top-1/2 mx-auto p-2 max-w-12 sm:max-w-3xs h-xl bg-white rounded-md z-20 shadow-md`}
+            className={
+                `${!isVisible ? 'hidden' : ''} 
+                flex flex-col sticky top-1/2 
+                w-full mx-auto pt-2 px-3 pb-4 max-w-3xs md:max-w-xl
+                sm:max-w-3xs h-xl bg-white rounded-md z-20 shadow-md outline-0`
+            }
             isOpen={isVisible}
         >
-            <div className="flex justify-self-end">
+            <div className="flex justify-end">
                 <CloseBtn />
             </div>
             <AddPostForm />
