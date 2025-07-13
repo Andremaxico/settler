@@ -18,7 +18,7 @@ export const AddPostModal: React.FC<PropsType> = () => {
         <Modal
             className={
                 `${!isVisible ? 'hidden' : ''} 
-                flex flex-col sticky top-1/2 
+                flex flex-col sticky top-1/2 translate-y-[-50%]
                 w-full mx-auto pt-2 px-3 pb-4 max-w-3xs md:max-w-xl
                 sm:max-w-3xs h-xl bg-white rounded-md z-20 shadow-md outline-0`
             }
