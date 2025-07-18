@@ -1,14 +1,36 @@
-'usee client'
+'use client'
 
 import { CameraIcon, TrashIcon } from '@heroicons/react/solid';
+import { useSession } from 'next-auth/react';
+import { v4 } from 'uuid';
 import Image from 'next/image';
 import React, { useRef, useState } from 'react';
 
+export type PostDataType = {
+    username: string,
+    imageFilePath: string,
+    caption: string,
+    id: string,
+    avatarUrl: string | null,
+}
+
+export type PostSendDataType = {
+    username: string,
+    timestamp: any, //TODO: add type
+    imageUrl: string,
+    caption: string,
+    id: string,
+    avatarUrl: string,
+}
 
 type PropsType = {};
 
 export const AddPostForm: React.FC<PropsType> = () => {
+    const { data: session } = useSession();
     const [selectedFile, setSelectedFile] = useState<string | null>(null);
+    const [caption, setCaption] = useState<string>('');
+
+    console.log(session?.user);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const currFiles = e.currentTarget.files;
@@ -29,8 +51,20 @@ export const AddPostForm: React.FC<PropsType> = () => {
         setSelectedFile(null);
     }
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleCaptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setCaption(e.target.value);
+    }
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        if(selectedFile && session?.user?.name) {
+            const sendData: PostDataType = {
+                avatarUrl: session?.user?.image || null,
+                caption,
+                id: v4(),
+                imageFilePath: selectedFile,
+                username: session.user.name,
+            }
+        }   
         e.preventDefault();
     }
 
@@ -74,6 +108,9 @@ export const AddPostForm: React.FC<PropsType> = () => {
             <input 
                 type='text'
                 placeholder='Введіть ваш опис тут'
+                value={caption}
+                defaultValue={caption}
+                onChange={handleCaptionChange}
                 className='
                     p-2 text-sm md:text-md mb-4
                     outline-0 cursor-pointer duration-100
@@ -81,7 +118,15 @@ export const AddPostForm: React.FC<PropsType> = () => {
                     after:bg-black after:duration-75 hover:after:opacity-100 
                 '
             />
-            <button className='px-2 py-1 text-white text-sm bg-orange-400 disabled:bg-gray-300 disabled:text-black disabled:cursor-not-allowed hover:shadow-md rounded-sm duration-100'>
+            <button
+                className='
+                    px-2 py-1 
+                    text-white text-sm bg-orange-400 
+                    disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed
+                    hover:shadow-md rounded-sm duration-100
+                '
+                disabled={selectedFile === null}
+            >
                 Опублікувати
             </button>
         </form>
