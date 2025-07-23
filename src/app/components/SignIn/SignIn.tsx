@@ -1,20 +1,32 @@
 'use client'
 
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
-import React from 'react'
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react'
+import { SessionType } from '../Header/HeaderProfile';
 
 type PropsType = {};
 
 export const SignIn: React.FC<PropsType> = ({}) => {
+	const router = useRouter();
+	const session = useSession() as unknown as SessionType;
+
+	const redirect = () => router.push(`${process.env.NEXT_PUBLIC_BASE_URL}`);
+
 	const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
 
 		console.log('callbacl url', process.env.NEXT_PUBLIC_NEXTAUTH_URL)
 		const res = await signIn('google', { redirect: true, callbackUrl: `${process.env.NEXT_PUBLIC_NEXTAUTH_URL || 'http://localhost:3000'}/api/auth/callback/google` });
 
+		if(res?.ok) redirect();
 		console.log('signin response', res);
 	}
  
+	useEffect(() => {
+		if(session.user) redirect();
+	})
+
 	return (
 		<div className='flex items-center space-x-2 max-w-3xl mx-auto'>
 			<div className="hidden sm:block flex-2/3 grow-0">

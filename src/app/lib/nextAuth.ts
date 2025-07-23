@@ -3,10 +3,11 @@ import NextAuth, { AuthOptions, Session } from "next-auth"
 import { JWT } from 'next-auth/jwt';
 import { AdapterUser } from 'next-auth/adapters';
 
-console.log('id', !!process.env.NEXT_PUBLIC_GOOGLE_ID, 'secret', !!process.env.NEXT_PUCLIC_GOOGLE_SECRET )
+console.log('id', !!process.env.NEXT_PUBLIC_GOOGLE_ID, 'secret', !!process.env.NEXT_PUBLIC_GOOGLE_SECRET )
 
 export const authOptions: AuthOptions = {
   // Configure one or more authentication providers
+	secret: process.env.NEXT_PUBLIC_AUTH_SECRET,
 	providers: [
 		GoogleProvider({
 			clientId: process.env.NEXT_PUBLIC_GOOGLE_ID || '',

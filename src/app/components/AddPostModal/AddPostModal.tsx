@@ -1,7 +1,7 @@
 'use client';
 
-import { useAddPostModalStore } from '@/app/zustand/addPostModalStore';
-import React from 'react'
+import { useAddPostModalStore } from '@/app/utils/zustand/addPostModalStore';
+import React, { useEffect } from 'react'
 import { useRecoilState } from 'recoil';
 import Modal from 'react-modal';
 import { CloseBtn } from './CloseBtn';
@@ -14,7 +14,7 @@ export const AddPostModal: React.FC<PropsType> = () => {
 
     console.log('is visible', isVisible);
 
-    return (
+    return typeof window !== 'undefined' ?
         <Modal
             className={
                 `${!isVisible ? 'hidden' : ''} 
@@ -23,11 +23,13 @@ export const AddPostModal: React.FC<PropsType> = () => {
                 sm:max-w-3xs h-xl bg-white rounded-md z-20 shadow-md outline-0`
             }
             isOpen={isVisible}
+            appElement={document.getElementsByTagName('body') || undefined}
         >
             <div className="flex justify-end">
                 <CloseBtn />
             </div>
             <AddPostForm />
-        </Modal> 
-    )
+        </Modal>
+    : 
+        <></>
 }

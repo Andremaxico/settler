@@ -1,7 +1,7 @@
 'use client'
 
 
-import { useAddPostModalStore } from '@/app/zustand/addPostModalStore';
+import { useAddPostModalStore } from '@/app/utils/zustand/addPostModalStore';
 import React from 'react';
 
 type PropsType = {};

@@ -1,7 +1,7 @@
 'use client'
 
 import { authOptions } from '@/app/lib/nextAuth'
-import { useAddPostModalStore } from '@/app/zustand/addPostModalStore'
+import { useAddPostModalStore } from '@/app/utils/zustand/addPostModalStore'
 import { PlusCircleIcon } from '@heroicons/react/outline'
 import { HomeIcon, LoginIcon, LogoutIcon } from '@heroicons/react/solid'
 import { getServerSession } from 'next-auth'
@@ -40,9 +40,11 @@ export const HeaderProfile = () => {
 			<button className='mr-2 hidden md:inline-flex hover:scale-125 duration-75'>
 				<HomeIcon className='size-5 md:size-6' />
 			</button>
-			<button className='mr-2 hover:scale-125 duration-75' onClick={handlePlusClick}>
-				<PlusCircleIcon className='size-5 md:size-6' />
-			</button>
+			{session?.user &&
+				<button className='mr-2 hover:scale-125 duration-75' onClick={handlePlusClick}>
+					<PlusCircleIcon className='size-5 md:size-6' />
+				</button>
+			}
 			{session ?
 				<button className="mr-2 w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden">
 					<Image
@@ -54,7 +56,7 @@ export const HeaderProfile = () => {
 				</button>
 			:
 				<Link className='flex items-center hover:text-blue-600' href={'/auth/signin'}>
-					<span className='mr-1 hidden md:inline-block'>Sign In</span>
+					<span className='mr-1 hidden md:inline-block'>Увійти</span>
 					<LoginIcon className='size-4' />
 				</Link>
 			}

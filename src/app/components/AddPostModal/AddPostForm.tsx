@@ -29,6 +29,7 @@ export const AddPostForm: React.FC<PropsType> = () => {
     const { data: session } = useSession();
     const [selectedFile, setSelectedFile] = useState<string | null>(null);
     const [caption, setCaption] = useState<string>('');
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     console.log(session?.user);
 
@@ -55,7 +56,9 @@ export const AddPostForm: React.FC<PropsType> = () => {
         setCaption(e.target.value);
     }
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        console.log('selected file', selectedFile, 'user name', session?.user?.name)
+
         if(selectedFile && session?.user?.name) {
             const sendData: PostDataType = {
                 avatarUrl: session?.user?.image || null,
@@ -64,7 +67,9 @@ export const AddPostForm: React.FC<PropsType> = () => {
                 imageFilePath: selectedFile,
                 username: session.user.name,
             }
-        }   
+
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, { method: 'POST', body: JSON.stringify(sendData) })
+        }
         e.preventDefault();
     }
 
@@ -109,7 +114,6 @@ export const AddPostForm: React.FC<PropsType> = () => {
                 type='text'
                 placeholder='Введіть ваш опис тут'
                 value={caption}
-                defaultValue={caption}
                 onChange={handleCaptionChange}
                 className='
                     p-2 text-sm md:text-md mb-4
@@ -118,17 +122,22 @@ export const AddPostForm: React.FC<PropsType> = () => {
                     after:bg-black after:duration-75 hover:after:opacity-100 
                 '
             />
-            <button
-                className='
-                    px-2 py-1 
-                    text-white text-sm bg-orange-400 
-                    disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed
-                    hover:shadow-md rounded-sm duration-100
-                '
-                disabled={selectedFile === null}
-            >
-                Опублікувати
-            </button>
+            {isLoading ?
+                // TODO: add loader
+                <p>loading...</p>
+            ;
+                <button
+                    className='
+                        px-2 py-1 
+                        text-white text-sm bg-orange-400 
+                        disabled:bg-gray-200 disabled:text-gray-500 disabled:cursor-not-allowed
+                        hover:shadow-md rounded-sm duration-100
+                    '
+                    disabled={selectedFile === null}
+                >
+                    Опублікувати
+                </button>   
+            }
         </form>
     )
 }

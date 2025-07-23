@@ -19,13 +19,18 @@ export const MiniProile: React.FC<PropsType> = ({}) => {
 				className="mr-2"
 				href='/'
 			>
-				<Image 
-					src={session?.user.image}
-					alt='avatar'
-					width={70}
-					height={70}
-					className='p-0.5 w-16 h-16 object-cover border-1 border-gray-300 rounded-full'
-				/>
+				{session?.user.image ?
+					<Image 
+						src={session?.user.image}
+						alt='avatar'
+						width={70}
+						height={70}
+						className='p-0.5 w-16 h-16 object-cover border-1 border-gray-300 rounded-full'
+					/>
+				:
+					// TODO: add loader
+					<p>no image</p>
+				}
 			</Link>
 			<div className="flex flex-col flex-1">
 				<p className='mb-1 text-md font-semibold'>{session?.user.username}</p>
