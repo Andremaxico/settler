@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import { v4 } from 'uuid';
 import Image from 'next/image';
 import React, { useRef, useState } from 'react';
+import { axiosInstance } from '@/app/utils/axios/axiosInstance';
 
 export type PostDataType = {
     username: string,
@@ -17,7 +18,7 @@ export type PostDataType = {
 export type PostSendDataType = {
     username: string,
     timestamp: any, //TODO: add type
-    imageUrl: string,
+    imageFilePath: string,
     caption: string,
     id: string,
     avatarUrl: string,
@@ -57,9 +58,11 @@ export const AddPostForm: React.FC<PropsType> = () => {
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        console.log('selected file', selectedFile, 'user name', session?.user?.name)
+        console.log('selected file', selectedFile, 'user name', session?.user?.name, 'base url', process.env.NEXT_PUBLIC_BASE_URL)
+    
 
         if(selectedFile && session?.user?.name) {
+            setIsLoading(true);
             const sendData: PostDataType = {
                 avatarUrl: session?.user?.image || null,
                 caption,
@@ -68,7 +71,9 @@ export const AddPostForm: React.FC<PropsType> = () => {
                 username: session.user.name,
             }
 
-            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, { method: 'POST', body: JSON.stringify(sendData) })
+            const res = await axiosInstance.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, sendData);
+
+            setIsLoading(false);
         }
         e.preventDefault();
     }
@@ -125,7 +130,7 @@ export const AddPostForm: React.FC<PropsType> = () => {
             {isLoading ?
                 // TODO: add loader
                 <p>loading...</p>
-            ;
+            :
                 <button
                     className='
                         px-2 py-1 
