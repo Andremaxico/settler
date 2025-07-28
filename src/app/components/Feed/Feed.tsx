@@ -16,9 +16,11 @@ export const Feed: React.FC<PropsType> = async () => {
 				<Stories />
 				<Posts />
 			</section>
-			<section className={`hidden relative  ${session ? 'md:flex' : 'md:hidden'} flex-col w-1/3`}>
-				<Suggestions />
-			</section>
+			{!!session &&
+				<section className={`hidden relative  md:flex flex-col w-1/3`}>
+					<Suggestions />
+				</section>
+			}
 		</div>
 	)
 }

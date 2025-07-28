@@ -6,27 +6,15 @@ import { v4 } from 'uuid';
 import Image from 'next/image';
 import React, { useRef, useState } from 'react';
 import { axiosInstance } from '@/app/utils/axios/axiosInstance';
-
-export type PostDataType = {
-    username: string,
-    imageFilePath: string,
-    caption: string,
-    id: string,
-    avatarUrl: string | null,
-}
-
-export type PostSendDataType = {
-    username: string,
-    timestamp: any, //TODO: add type
-    imageFilePath: string,
-    caption: string,
-    id: string,
-    avatarUrl: string,
-}
+import { useAddPostModalStore } from '@/app/utils/zustand/addPostModalStore';
+import { PostDataType, PostSendDataType } from '@/app/utils/types';
 
 type PropsType = {};
 
 export const AddPostForm: React.FC<PropsType> = () => {
+    //TODO: add validation
+
+    const { hide } = useAddPostModalStore();
     const { data: session } = useSession();
     const [selectedFile, setSelectedFile] = useState<string | null>(null);
     const [caption, setCaption] = useState<string>('');
@@ -59,11 +47,11 @@ export const AddPostForm: React.FC<PropsType> = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         console.log('selected file', selectedFile, 'user name', session?.user?.name, 'base url', process.env.NEXT_PUBLIC_BASE_URL)
-    
+        e.preventDefault();
 
         if(selectedFile && session?.user?.name) {
             setIsLoading(true);
-            const sendData: PostDataType = {
+            const sendData: PostSendDataType = {
                 avatarUrl: session?.user?.image || null,
                 caption,
                 id: v4(),
@@ -73,9 +61,15 @@ export const AddPostForm: React.FC<PropsType> = () => {
 
             const res = await axiosInstance.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, sendData);
 
+            if(res.status === 201) {
+                //TODO: show success message
+            } else {
+                //TODO: show error message
+            }
+
+            hide();
             setIsLoading(false);
         }
-        e.preventDefault();
     }
 
     return (
@@ -85,6 +79,7 @@ export const AddPostForm: React.FC<PropsType> = () => {
                 id='postImage'
                 className='hidden' 
                 onChange={handleChange}
+                required
             />
             {selectedFile ? 
                 <div className="relative flex flex-col justify-end mb-2 group">
