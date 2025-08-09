@@ -16,7 +16,8 @@ export const AddPostForm: React.FC<PropsType> = () => {
 
     const { hide } = useAddPostModalStore();
     const { data: session } = useSession();
-    const [selectedFile, setSelectedFile] = useState<string | null>(null);
+    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+    const [selectedFilePath, setSelectedFilePath] = useState<string | null>(null);
     const [caption, setCaption] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -26,14 +27,17 @@ export const AddPostForm: React.FC<PropsType> = () => {
         const currFiles = e.currentTarget.files;
 
         if(currFiles && currFiles[0]) {
-            const reader = new FileReader();
-            reader.readAsDataURL(currFiles[0]);
+            // const reader = new FileReader();
+            // reader.readAsDataURL(currFiles[0]);
 
-            reader.onload = (e: ProgressEvent<FileReader>) => {
-                if(e.target && e.target.result) {
-                    setSelectedFile(e.target.result.toString())
-                }
-            }
+            // reader.onload = (e: ProgressEvent<FileReader>) => {
+            //     if(e.target && e.target.result) {
+            //         (e.target.result.toString())
+            //     }
+            // }
+            console.log('selected file in form', currFiles[0]);
+            setSelectedFilePath(URL.createObjectURL(currFiles[0]));
+            setSelectedFile(currFiles[0]);
         }
     }
 
@@ -51,15 +55,18 @@ export const AddPostForm: React.FC<PropsType> = () => {
 
         if(selectedFile && session?.user?.name) {
             setIsLoading(true);
+            const formData = new FormData();
+            formData.append('imageFile', selectedFile, selectedFile.name);
+
             const sendData: PostSendDataType = {
                 avatarUrl: session?.user?.image || null,
                 caption,
                 id: v4(),
-                imageFilePath: selectedFile,
+                imageData: formData,
                 username: session.user.name,
             }
 
-            const res = await axiosInstance.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, sendData);
+            const res = await axiosInstance.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, JSON.stringify(sendData));
 
             if(res.status === 201) {
                 //TODO: show success message
@@ -81,12 +88,12 @@ export const AddPostForm: React.FC<PropsType> = () => {
                 onChange={handleChange}
                 required
             />
-            {selectedFile ? 
+            {selectedFilePath ? 
                 <div className="relative flex flex-col justify-end mb-2 group">
                     <Image 
                         width={500}
                         height={500}
-                        src={selectedFile}
+                        src={selectedFilePath}
                         alt='post image'
                         className='max-w-full max-h-100 object-cover'
                     />
