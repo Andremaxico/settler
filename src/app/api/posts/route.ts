@@ -3,12 +3,14 @@ import { PostDataType, PostSendDataType } from "@/app/utils/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
-    const json = await req.json();
-    const { avatarUrl, caption, id, imageData, username } = json as unknown as PostSendDataType;
+    const formData = await req.formData();
+    // const { avatarUrl, caption, id, imageData, username } = json as unknown as PostSendDataType;
 
-    console.log('file in api before upload', imageData.get('imageFile'))
-
-    const imageFile = imageData.get('imageFile');
+    const avatarUrl = formData.get('avatarUrl') as string
+    const imageFile = formData.get('imageFile')
+    const id = formData.get('id') as string
+    const caption = formData.get('caption') as string
+    const username = formData.get('username') as string
 
     if(imageFile) {
         const { data: fileData, error: fileError } = await supabase
@@ -21,19 +23,9 @@ export const POST = async (req: NextRequest) => {
         console.log('file data', fileData, 'error', fileError);
 
         if(fileData) {
-            const files: string[] = [];
+            const { data: imageData } = supabase.storage.from('posts').getPublicUrl(fileData.path);
 
-            const { data: imagesData } = supabase.storage.from('posts').getPublicUrl(fileData.path);
-            console.log('images data', imagesData);
-            // imagesData?.map(file => {
-            //     const { data: imageData } = supabase.storage
-            //         .from('posts')
-            //         .getPublicUrl(file.name)
-            //     files.push(imageData.publicUrl);
-            // })
-
-            console.log('files', files);
-            const imageUrl = files[0] || '';
+            const imageUrl = `${imageData.publicUrl}?token=${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`;
 
             console.log('image url', imageUrl);
 

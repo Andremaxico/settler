@@ -8,6 +8,7 @@ import React, { useRef, useState } from 'react';
 import { axiosInstance } from '@/app/utils/axios/axiosInstance';
 import { useAddPostModalStore } from '@/app/utils/zustand/addPostModalStore';
 import { PostDataType, PostSendDataType } from '@/app/utils/types';
+import { formToJSON } from 'axios';
 
 type PropsType = {};
 
@@ -56,17 +57,14 @@ export const AddPostForm: React.FC<PropsType> = () => {
         if(selectedFile && session?.user?.name) {
             setIsLoading(true);
             const formData = new FormData();
+
             formData.append('imageFile', selectedFile, selectedFile.name);
+            formData.append('avatarUrl', session?.user?.image || '');
+            formData.append('caption', caption)
+            formData.append('id', v4())
+            formData.append('username', session.user.name)
 
-            const sendData: PostSendDataType = {
-                avatarUrl: session?.user?.image || null,
-                caption,
-                id: v4(),
-                imageData: formData,
-                username: session.user.name,
-            }
-
-            const res = await axiosInstance.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, JSON.stringify(sendData));
+            const res = await axiosInstance.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, formData);
 
             if(res.status === 201) {
                 //TODO: show success message
